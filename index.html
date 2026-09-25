@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08101d">
+    <title>VANH — BLOCK FALL</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/guide.css">
+</head>
+
+<body>
+
+    <!-- MENU -->
+    <main id="menu-screen" class="screen active">
+
+        <div class="menu-bg"></div>
+        <div class="menu-grid"></div>
+
+        <section class="menu-content">
+
+            <div class="brand">
+                <div class="brand-name">VANH</div>
+                <div class="brand-sub">
+                    B L O C K&nbsp;&nbsp; F A L L
+                </div>
+            </div>
+
+            <div class="select-title">
+                SELECT MODE
+            </div>
+
+            <div class="mode-list">
+
+                <button
+                    class="mode-card"
+                    data-mode="40-lines"
+                    type="button"
+                >
+                    <span class="mode-number">01</span>
+
+                    <span class="mode-main">
+                        <strong class="mode-name">
+                            40 LINES
+                        </strong>
+
+                        <small class="mode-desc">
+                            CLEAR 40 LINES
+                        </small>
+                    </span>
+
+                    <span class="mode-arrow">→</span>
+                </button>
+
+                <button
+                    class="mode-card"
+                    data-mode="100-lines"
+                    type="button"
+                >
+                    <span class="mode-number">02</span>
+
+                    <span class="mode-main">
+                        <strong class="mode-name">
+                            100 LINES
+                        </strong>
+
+                        <small class="mode-desc">
+                            CLEAR 100 LINES
+                        </small>
+                    </span>
+
+                    <span class="mode-arrow">→</span>
+                </button>
+
+                <button
+                    class="mode-card"
+                    data-mode="5-minutes"
+                    type="button"
+                >
+                    <span class="mode-number">03</span>
+
+                    <span class="mode-main">
+                        <strong class="mode-name">
+                            5 MINUTES
+                        </strong>
+
+                        <small class="mode-desc">
+                            GET THE HIGHEST SCORE
+                        </small>
+                    </span>
+
+                    <span class="mode-arrow">→</span>
+                </button>
+
+            </div>
+
+            <!-- MENU GUIDE -->
+            <div class="menu-guide">
+
+                <div class="menu-guide-left">
+
+                    <div class="menu-guide-icon">
+                        <span>?</span>
+                    </div>
+
+                    <div>
+                        <strong>NEW PLAYER?</strong>
+                        <small>
+                            Learn the controls before you play
+                        </small>
+                    </div>
+
+                </div>
+
+                <button
+                    id="menu-guide-button"
+                    class="guide-open-button"
+                    type="button"
+                >
+                    HOW TO PLAY
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <div class="copyright">
+                VANH © 2026
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- GAME -->
+    <main id="game-screen" class="screen">
+
+        <div id="game-message"></div>
+
+        <header class="game-header">
+
+            <div class="game-brand">
+                VANH
+            </div>
+
+            <div
+                id="mode-name"
+                class="game-mode"
+            >
+                40 LINES
+            </div>
+
+            <div class="header-actions">
+
+                <button
+                    id="guide-button"
+                    class="small-button guide-button"
+                    type="button"
+                >
+                    HOW TO PLAY
+                </button>
+
+                <button
+                    id="sound-button"
+                    class="small-button"
+                    type="button"
+                >
+                    SOUND ON
+                </button>
+
+                <button
+                    id="pause-button"
+                    class="small-button"
+                    type="button"
+                >
+                    PAUSE
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="game-layout">
+
+            <!-- LEFT -->
+            <aside class="side-panel left-panel">
+
+                <div class="panel-title">
+                    HOLD
+                </div>
+
+                <div class="preview-box hold-box">
+                    <canvas
+                        id="hold-canvas"
+                        width="120"
+                        height="90"
+                    ></canvas>
+                </div>
+
+                <div class="stat-block">
+                    <span>SCORE</span>
+                    <strong id="score">
+                        000000
+                    </strong>
+                </div>
+
+                <div class="stat-block high-score-block">
+                    <span>HIGH SCORE</span>
+                    <strong id="high-score">
+                        000000
+                    </strong>
+                </div>
+
+            </aside>
+
+
+            <!-- BOARD -->
+            <div class="board-wrap">
+
+                <div class="board-container">
+
+                    <canvas id="game-canvas"></canvas>
+
+                    <div id="game-flash"></div>
+                    <div class="board-vignette"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT -->
+            <aside class="side-panel right-panel">
+
+                <div class="panel-title">
+                    NEXT
+                </div>
+
+                <div class="preview-box next-box">
+                    <canvas
+                        id="next-canvas"
+                        width="120"
+                        height="90"
+                    ></canvas>
+                </div>
+
+                <div class="stat-block">
+                    <span>LINES</span>
+                    <strong id="lines">
+                        00
+                    </strong>
+                </div>
+
+                <div class="stat-block">
+                    <span>COMBO</span>
+                    <strong id="combo">
+                        ×0
+                    </strong>
+                </div>
+
+                <div class="stat-block">
+                    <span>TIME</span>
+                    <strong id="timer">
+                        00:00
+                    </strong>
+                </div>
+
+            </aside>
+
+        </section>
+
+
+        <!-- PAUSE -->
+        <div
+            id="pause-overlay"
+            class="overlay"
+        >
+
+            <div class="overlay-card">
+
+                <div class="overlay-kicker">
+                    VANH — BLOCK FALL
+                </div>
+
+                <div class="overlay-title">
+                    PAUSED
+                </div>
+
+                <button
+                    id="resume-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    RESUME
+                </button>
+
+                <button
+                    id="restart-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    RESTART
+                </button>
+
+                <button
+                    id="menu-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    MENU
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- RESULT -->
+    <main
+        id="result-screen"
+        class="screen"
+    >
+
+        <div class="result-card">
+
+            <div class="result-brand">
+                VANH — BLOCK FALL
+            </div>
+
+            <h1 id="result-title">
+                GAME OVER
+            </h1>
+
+            <div class="result-score">
+
+                <span>SCORE</span>
+
+                <strong id="result-score">
+                    000000
+                </strong>
+
+            </div>
+
+            <div class="result-stats">
+
+                <div>
+                    <span>LINES</span>
+                    <strong id="result-lines">
+                        00
+                    </strong>
+                </div>
+
+                <div>
+                    <span>TIME</span>
+                    <strong id="result-time">
+                        00:00
+                    </strong>
+                </div>
+
+                <div>
+                    <span>MAX COMBO</span>
+                    <strong id="result-combo">
+                        ×0
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                id="new-record"
+                class="new-record"
+            >
+                NEW HIGH SCORE
+            </div>
+
+            <div class="result-buttons">
+
+                <button
+                    id="play-again-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    PLAY AGAIN
+                </button>
+
+                <button
+                    id="result-menu-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    MENU
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- HOW TO PLAY -->
+    <div
+        id="guide-overlay"
+        class="guide-overlay"
+    >
+
+        <div
+            class="guide-backdrop"
+            id="guide-backdrop"
+        ></div>
+
+        <section class="guide-modal">
+
+            <button
+                id="guide-close"
+                class="guide-close"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+            <div class="guide-header">
+
+                <div class="guide-kicker">
+                    VANH — BLOCK FALL
+                </div>
+
+                <h2>
+                    HOW TO PLAY
+                </h2>
+
+                <p>
+                    PLACE • CLEAR • COMBO • DOMINATE
+                </p>
+
+            </div>
+
+
+            <div class="guide-controls">
+
+                <div class="control-card">
+
+                    <div class="key-group">
+
+                        <div class="key key-arrow">
+                            ←
+                        </div>
+
+                        <div class="key key-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+                    <div class="control-info">
+                        <strong>
+                            MOVE
+                        </strong>
+
+                        <span>
+                            Move the block left or right
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="control-card">
+
+                    <div class="key-group">
+
+                        <div class="key key-arrow">
+                            ↑
+                        </div>
+
+                        <div class="key key-arrow">
+                            ↓
+                        </div>
+
+                    </div>
+
+                    <div class="control-info">
+                        <strong>
+                            ROTATE
+                        </strong>
+
+                        <span>
+                            Rotate the block both directions
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="control-card featured-control">
+
+                    <div class="key-group">
+
+                        <div class="key key-space">
+                            SPACE
+                        </div>
+
+                    </div>
+
+                    <div class="control-info">
+                        <strong>
+                            HARD DROP
+                        </strong>
+
+                        <span>
+                            Slam the block straight down
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="control-card">
+
+                    <div class="key-group">
+
+                        <div class="key key-c">
+                            C
+                        </div>
+
+                    </div>
+
+                    <div class="control-info">
+                        <strong>
+                            HOLD
+                        </strong>
+
+                        <span>
+                            Save a block for later
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="control-card">
+
+                    <div class="key-group">
+
+                        <div class="key key-esc">
+                            ESC
+                        </div>
+
+                    </div>
+
+                    <div class="control-info">
+                        <strong>
+                            PAUSE
+                        </strong>
+
+                        <span>
+                            Pause or resume the game
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="guide-objective">
+
+                <div class="objective-icon">
+                    ✦
+                </div>
+
+                <div>
+
+                    <strong>
+                        YOUR OBJECTIVE
+                    </strong>
+
+                    <span>
+                        Complete lines to clear the board,
+                        build combos and chase your high score.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="guide-tip">
+
+                <span class="tip-label">
+                    PRO TIP
+                </span>
+
+                <span>
+                    Use HOLD to prepare difficult pieces
+                    and SPACE when you are ready to lock.
+                </span>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="./js/main.js"
+    ></script>
+
+</body>
+</html>
