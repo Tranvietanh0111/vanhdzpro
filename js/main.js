@@ -48,6 +48,12 @@ const guideClose=
 const guideBackdrop=
     document.getElementById('guide-backdrop');
 
+const mobileControls=
+    document.getElementById('mobile-controls');
+
+const mobileButtons=
+    document.querySelectorAll('[data-mobile-action]');
+
 let selectedMode=null;
 let game=null;
 
@@ -234,6 +240,79 @@ guideBackdrop.addEventListener(
     'click',
     closeGuide
 );
+
+
+function handleMobileAction(action){
+
+    if(!game || !game.running || game.paused){
+        if(action==='pause' && game && game.running){
+            game.togglePause();
+        }
+        return;
+    }
+
+    if(action==='left'){
+        game.move(-1);
+        return;
+    }
+
+    if(action==='right'){
+        game.move(1);
+        return;
+    }
+
+    if(action==='rotate-left'){
+        game.rotate(-1);
+        return;
+    }
+
+    if(action==='rotate-right'){
+        game.rotate(1);
+        return;
+    }
+
+    if(action==='drop'){
+        game.hardDrop();
+        return;
+    }
+
+    if(action==='hold'){
+        game.hold();
+        return;
+    }
+
+    if(action==='pause'){
+        game.togglePause();
+    }
+}
+
+
+mobileButtons.forEach(button=>{
+
+    const action=button.dataset.mobileAction;
+
+    button.addEventListener('pointerdown',event=>{
+        event.preventDefault();
+        button.classList.add('pressed');
+
+        if(button.setPointerCapture){
+            button.setPointerCapture(event.pointerId);
+        }
+
+        handleMobileAction(action);
+    });
+
+    const release=event=>{
+        event.preventDefault();
+        button.classList.remove('pressed');
+    };
+
+    button.addEventListener('pointerup',release);
+    button.addEventListener('pointercancel',release);
+    button.addEventListener('lostpointercapture',()=>{
+        button.classList.remove('pressed');
+    });
+});
 
 
 window.addEventListener(
